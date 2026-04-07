@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useAppContext } from '../context/AppContext';
 import { Users, Search, Mail, Shield, Building } from 'lucide-react';
-import DepartmentSelector from '../components/DepartmentSelector';
+import DepartmentSelector from '../Components/DepartmentSelector';
 
 const Directory = () => {
   const { currentUser, users, departments } = useAppContext();

@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useAppContext } from '../context/AppContext';
 import { Users, FileText, Clock, Briefcase, AlertTriangle, Brain, Download, Shield, Activity } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
-import StatusTimeline from '../components/StatusTimeline';
-import DepartmentSelector from '../components/DepartmentSelector';
+import StatusTimeline from '../Components/StatusTimeline';
+import DepartmentSelector from '../Components/DepartmentSelector';
 import api from '../services/api';
 
 const PrincipalDashboard = () => {

@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useAppContext } from '../context/AppContext';
 import { Users, Clock, Download, Brain, BarChart3, AlertTriangle } from 'lucide-react';
-import Heatmap from '../components/Heatmap';
-import LeaveWizard from '../components/LeaveWizard';
-import LeaveGuidelines from '../components/LeaveGuidelines';
-import StatusTimeline from '../components/StatusTimeline';
-import BadgeDisplay from '../components/BadgeDisplay';
+import Heatmap from '../Components/Heatmap';
+import LeaveWizard from '../Components/LeaveWizard';
+import LeaveGuidelines from '../Components/LeaveGuidelines';
+import StatusTimeline from '../Components/StatusTimeline';
+import BadgeDisplay from '../Components/BadgeDisplay';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
 
 const HodDashboard = () => {

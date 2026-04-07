@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useAppContext } from '../context/AppContext';
 import { Users, Clock, CheckCircle, Download, Brain, AlertTriangle } from 'lucide-react';
-import LeaveWizard from '../components/LeaveWizard';
-import LeaveGuidelines from '../components/LeaveGuidelines';
-import StatusTimeline from '../components/StatusTimeline';
-import Heatmap from '../components/Heatmap';
-import BadgeDisplay from '../components/BadgeDisplay';
+import LeaveWizard from '../Components/LeaveWizard';
+import LeaveGuidelines from '../Components/LeaveGuidelines';
+import StatusTimeline from '../Components/StatusTimeline';
+import Heatmap from '../Components/Heatmap';
+import BadgeDisplay from '../Components/BadgeDisplay';
 
 const StaffDashboard = () => {
   const { currentUser, updateLeaveStatus, addUser, submitLeave, getMyLeaves, getWhosOutToday,

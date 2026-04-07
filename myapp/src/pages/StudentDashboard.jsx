@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useAppContext } from '../context/AppContext';
 import { Calendar, Download, Search, HelpCircle, Sparkles } from 'lucide-react';
-import LeaveWizard from '../components/LeaveWizard';
-import LeaveGuidelines from '../components/LeaveGuidelines';
-import StatusTimeline from '../components/StatusTimeline';
-import BadgeDisplay from '../components/BadgeDisplay';
+import LeaveWizard from '../Components/LeaveWizard';
+import LeaveGuidelines from '../Components/LeaveGuidelines';
+import StatusTimeline from '../Components/StatusTimeline';
+import BadgeDisplay from '../Components/BadgeDisplay';
 import api from '../services/api';
 
 const StudentDashboard = () => {
