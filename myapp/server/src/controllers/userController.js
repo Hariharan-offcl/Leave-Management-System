@@ -66,9 +66,9 @@ exports.addUser = async (req, res) => {
 
     // Create user
     const [result] = await pool.execute(
-      `INSERT INTO users (name, email, password, role, department, department_id, manager_id, joining_date, is_active) 
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, TRUE)`,
-      [name, email, hashedPassword, role, deptName, resolvedDeptId, manager_id, new Date().toISOString().split('T')[0]]
+      `INSERT INTO users (name, email, password, role, department_id, manager_id, joining_date, is_active) 
+       VALUES (?, ?, ?, ?, ?, ?, ?, TRUE)`,
+      [name, email, hashedPassword, role, resolvedDeptId, manager_id, new Date().toISOString().split('T')[0]]
     );
 
     const userId = result.insertId;

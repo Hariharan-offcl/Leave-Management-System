@@ -21,13 +21,15 @@ const auditLogger = async (req, res, next) => {
     const entityId = extractEntityId(req.originalUrl, body);
     const details = {
       body: sanitizeBody(req.body),
-      responseStatus: res.statusCode
+      responseStatus: res.statusCode,
+      entityType: extractEntityType(req.originalUrl),
+      entityId: extractEntityId(req.originalUrl, body),
+      ip: req.ip || req.headers['x-forwarded-for'] || 'unknown'
     };
-    const ip = req.ip || req.headers['x-forwarded-for'] || 'unknown';
 
     pool.execute(
-      'INSERT INTO audit_logs (action, entity_type, entity_id, user_id, details, ip_address) VALUES (?, ?, ?, ?, ?, ?)',
-      [action, entityType, entityId, userId, JSON.stringify(details), ip]
+      'INSERT INTO audit_logs (action, user_id, details) VALUES (?, ?, ?)',
+      [action, userId, JSON.stringify(details)]
     ).catch(err => console.error('Audit log error:', err.message));
 
     return originalJson(body);
