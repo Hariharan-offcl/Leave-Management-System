@@ -59,7 +59,7 @@ exports.submitLeave = async (req, res) => {
 exports.getLeaves = async (req, res) => {
   try {
     let query = `
-      SELECT l.*, u.name as userName, u.department, u.department_id,
+      SELECT l.*, u.name as userName, u.department_id,
              d.name as dept_name, u2.name as reviewerName 
       FROM leaves l 
       JOIN users u ON l.user_id = u.id 

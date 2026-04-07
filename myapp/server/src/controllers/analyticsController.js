@@ -77,23 +77,38 @@ exports.getGlobalCapacity = async (req, res) => {
   try {
     const { days = 30 } = req.query;
     const deptFilter = req.user.role !== 'PRINCIPAL' && req.user.department_id
-      ? `AND l.department_id = ${parseInt(req.user.department_id)}`
+      ? `AND department_id = ${parseInt(req.user.department_id)}`
       : '';
 
-    const [rows] = await pool.execute(
-      `SELECT date_series.date, COUNT(l.id) as count
-       FROM (
-         SELECT CURDATE() + INTERVAL (a.a + (10 * b.a) + (100 * c.a)) DAY AS date
-         FROM (SELECT 0 AS a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) AS a
-         CROSS JOIN (SELECT 0 AS a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) AS b
-         CROSS JOIN (SELECT 0 AS a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) AS c
-       ) date_series
-       LEFT JOIN leaves l ON date_series.date BETWEEN l.start_date AND l.end_date AND l.status = 'APPROVED' ${deptFilter}
-       WHERE date_series.date BETWEEN CURDATE() AND CURDATE() + INTERVAL ? DAY
-       GROUP BY date_series.date
-       ORDER BY date_series.date`,
-      [parseInt(days)]
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const endDate = new Date(today);
+    endDate.setDate(endDate.getDate() + parseInt(days));
+
+    const [leaves] = await pool.execute(
+      `SELECT start_date, end_date FROM leaves WHERE status = 'APPROVED' ${deptFilter} AND end_date >= ? AND start_date <= ?`,
+      [today.toISOString().split('T')[0], endDate.toISOString().split('T')[0]]
     );
+
+    const capacityMap = {};
+    for (let i = 0; i < parseInt(days); i++) {
+       const d = new Date(today);
+       d.setDate(d.getDate() + i);
+       const dateStr = d.toISOString().split('T')[0];
+       capacityMap[dateStr] = 0;
+    }
+
+    leaves.forEach(l => {
+       const start = new Date(l.start_date);
+       const end = new Date(l.end_date);
+       for (let d = new Date(Math.max(start, today)); d <= Math.min(end, endDate); d.setDate(d.getDate() + 1)) {
+          const dictKey = d.toISOString().split('T')[0];
+          if (capacityMap[dictKey] !== undefined) capacityMap[dictKey]++;
+       }
+    });
+
+    const rows = Object.keys(capacityMap).sort().map(date => ({ date, count: capacityMap[date] }));
     res.json(rows);
   } catch (err) {
     console.error(err);
@@ -129,28 +144,45 @@ exports.getHeatmapData = async (req, res) => {
   try {
     const { days = 30 } = req.query;
     const deptId = req.query.department_id || req.user.department_id;
-
     let deptFilter = '';
-    const params = [parseInt(days)];
+    const params = [];
+    
     if (deptId) {
-      deptFilter = 'AND l.department_id = ?';
+      deptFilter = 'AND department_id = ?';
       params.push(parseInt(deptId));
     }
 
-    const [rows] = await pool.execute(
-      `SELECT date_series.date, COUNT(l.id) as count
-       FROM (
-         SELECT CURDATE() - INTERVAL (a.a + (10 * b.a)) DAY AS date
-         FROM (SELECT 0 AS a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) AS a
-         CROSS JOIN (SELECT 0 AS a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) AS b
-       ) date_series
-       LEFT JOIN leaves l ON date_series.date BETWEEN l.start_date AND l.end_date 
-         AND l.status = 'APPROVED' ${deptFilter}
-       WHERE date_series.date BETWEEN CURDATE() - INTERVAL ? DAY AND CURDATE()
-       GROUP BY date_series.date
-       ORDER BY date_series.date`,
-      [...params]
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const startDate = new Date(today);
+    startDate.setDate(startDate.getDate() - parseInt(days));
+
+    params.push(startDate.toISOString().split('T')[0], today.toISOString().split('T')[0]);
+
+    const [leaves] = await pool.execute(
+      `SELECT start_date, end_date FROM leaves WHERE status = 'APPROVED' ${deptFilter} AND end_date >= ? AND start_date <= ?`,
+      params
     );
+
+    const heatmapMap = {};
+    for (let i = 0; i <= parseInt(days); i++) {
+       const d = new Date(startDate);
+       d.setDate(d.getDate() + i);
+       const dateStr = d.toISOString().split('T')[0];
+       heatmapMap[dateStr] = 0;
+    }
+
+    leaves.forEach(l => {
+       const start = new Date(l.start_date);
+       const end = new Date(l.end_date);
+       for (let d = new Date(Math.max(start, startDate)); d <= Math.min(end, today); d.setDate(d.getDate() + 1)) {
+          const dictKey = d.toISOString().split('T')[0];
+          if (heatmapMap[dictKey] !== undefined) heatmapMap[dictKey]++;
+       }
+    });
+
+    const rows = Object.keys(heatmapMap).sort().map(date => ({ date, count: heatmapMap[date] }));
     res.json(rows);
   } catch (err) {
     console.error(err);

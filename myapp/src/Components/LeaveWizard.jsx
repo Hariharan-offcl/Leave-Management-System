@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Calendar, FileText, Send, Sparkles, AlertCircle } from 'lucide-react';
+import { Calendar, FileText, Send, Sparkles, AlertCircle, Clock } from 'lucide-react';
 import { useAppContext } from '../context/AppContext';
 
 const LeaveWizard = ({ onSubmit, leaveTypes, capacityData }) => {
