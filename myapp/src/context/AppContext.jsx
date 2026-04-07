@@ -53,51 +53,47 @@ export const AppProvider = ({ children }) => {
 
   const refreshData = async (user) => {
     const u = user || currentUser;
-    try {
-      const isPrincipal = u?.role === 'PRINCIPAL';
-      const isHOD = u?.role === 'HOD';
+    if (!u) return;
+    
+    const isPrincipal = u?.role === 'PRINCIPAL';
+    const isHOD = u?.role === 'HOD';
 
-      const requests = [
-        api.get('/leaves'),
-        api.get('/users/subordinates'),
-        api.get('/analytics/predictions'),
-        api.get('/analytics/capacity'),
-        api.get('/departments'),
-        api.get('/badges'),
-        api.get('/analytics/heatmap'),
-        isPrincipal ? api.get('/analytics/comparison') : Promise.resolve({ data: [] }),
-        (isPrincipal || isHOD) ? api.get('/ai/department-health') : Promise.resolve({ data: [] }),
-      ];
-
-      const [leavesRes, usersRes, predRes, capRes, deptRes, badgesRes, heatRes, compRes, healthRes] = 
-        await Promise.all(requests);
-
-      setLeaves(leavesRes.data);
-      setUsers(usersRes.data);
-      setPredictions(predRes.data);
-      setCapacityData(capRes.data);
-      setDepartments(deptRes.data);
-      setBadges(badgesRes.data);
-      setHeatmapData(heatRes.data);
-      setComparisonData(compRes.data);
-      setDepartmentHealth(healthRes.data);
-
-      // Fetch Global Settings
+    // Helper to fetch and set state safely
+    const safeFetch = async (endpoint, setter, label) => {
       try {
-        const [settingsRes, rulesRes] = await Promise.all([
-          api.get('/admin/settings'),
-          isPrincipal ? api.get('/admin/rules') : Promise.resolve({ data: [] })
-        ]);
-        setEmergencyOverride(settingsRes.data.emergency_override || false);
-        if (Array.isArray(rulesRes.data)) {
-          const rulesObj = rulesRes.data.reduce((acc, r) => ({ ...acc, [r.rule_key]: r.rule_value }), {});
-          setSystemRules(rulesObj);
-        }
-      } catch (e) {
-        // Settings might not be accessible for all roles
+        const res = await api.get(endpoint);
+        setter(res.data);
+      } catch (err) {
+        console.warn(`⚠️ Partial Load Failure [${label}]:`, err.message);
       }
-    } catch (err) {
-      console.error('Error refreshing data:', err);
+    };
+
+    // Parallel but independent fetches
+    await Promise.all([
+      safeFetch('/leaves', setLeaves, 'Leaves'),
+      safeFetch('/users/subordinates', setUsers, 'Subordinates'),
+      safeFetch('/analytics/predictions', setPredictions, 'Predictions'),
+      safeFetch('/analytics/capacity', setCapacityData, 'Capacity'),
+      safeFetch('/departments', setDepartments, 'Departments'),
+      safeFetch('/badges', setBadges, 'Badges'),
+      safeFetch('/analytics/heatmap', setHeatmapData, 'Heatmap'),
+      isPrincipal ? safeFetch('/analytics/comparison', setComparisonData, 'Comparison') : Promise.resolve(),
+      (isPrincipal || isHOD) ? safeFetch('/ai/department-health', setDepartmentHealth, 'Health') : Promise.resolve(),
+    ]);
+
+    // Fetch Global Settings separately
+    try {
+      const [settingsRes, rulesRes] = await Promise.all([
+        api.get('/admin/settings'),
+        isPrincipal ? api.get('/admin/rules') : Promise.resolve({ data: [] })
+      ]);
+      setEmergencyOverride(settingsRes.data.emergency_override || false);
+      if (Array.isArray(rulesRes.data)) {
+        const rulesObj = rulesRes.data.reduce((acc, r) => ({ ...acc, [r.rule_key]: r.rule_value }), {});
+        setSystemRules(rulesObj);
+      }
+    } catch (e) {
+      console.warn("⚠️ Settings/Rules Load Failure:", e.message);
     }
   };
 
