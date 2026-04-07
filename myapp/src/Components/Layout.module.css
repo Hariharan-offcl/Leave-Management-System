@@ -1,0 +1,240 @@
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ═══════════════════════════════════════════
+   ALIS COMMAND CENTER SIDEBAR
+   ═══════════════════════════════════════════ */
+.sidebar {
+  width: 260px;
+  background: var(--alis-bg-panel);
+  border-right: 1px solid var(--alis-border);
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 40;
+  transition: width 0.3s ease;
+}
+
+.brand {
+  padding: 24px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid var(--alis-border);
+}
+
+.brandIcon {
+  color: var(--alis-primary);
+  filter: drop-shadow(0 0 6px var(--alis-primary-glow));
+}
+
+.brand h2 {
+  font-size: 18px;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--alis-primary), #7c3aed);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.brand h2 span {
+  font-size: 9px;
+  font-weight: 500;
+  display: block;
+  -webkit-text-fill-color: var(--alis-text-muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.nav {
+  flex: 1;
+  padding: 16px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  overflow-y: auto;
+}
+
+.navLink {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--alis-text-muted);
+  text-decoration: none;
+  transition: all 0.2s;
+  position: relative;
+}
+
+.navLink:hover {
+  background-color: var(--alis-primary-bg);
+  color: var(--alis-primary);
+}
+
+.navLink.active {
+  background: linear-gradient(135deg, var(--alis-primary-bg), rgba(124, 58, 237, 0.08));
+  color: var(--alis-primary);
+  font-weight: 600;
+}
+
+.navLink.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 6px;
+  bottom: 6px;
+  width: 3px;
+  border-radius: 0 3px 3px 0;
+  background: linear-gradient(180deg, var(--alis-primary), #7c3aed);
+}
+
+.sidebarFooter {
+  padding: 16px 12px;
+  border-top: 1px solid var(--alis-border);
+}
+
+.logoutBtn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--alis-danger);
+  background: transparent;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: inherit;
+}
+
+.logoutBtn:hover {
+  background: var(--alis-danger-bg);
+  border-color: var(--alis-danger);
+}
+
+/* ═══════════════════════════════════════════
+   MAIN CONTENT
+   ═══════════════════════════════════════════ */
+.mainContent {
+  flex: 1;
+  margin-left: 260px;
+  display: flex;
+  flex-direction: column;
+  transition: margin-left 0.3s ease;
+}
+
+.header {
+  height: 64px;
+  background: var(--alis-bg-panel);
+  border-bottom: 1px solid var(--alis-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 28px;
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  backdrop-filter: blur(8px);
+}
+
+.headerRight {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.iconBtn {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--alis-border);
+  background: transparent;
+  color: var(--alis-text-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.iconBtn:hover {
+  background: var(--alis-primary-bg);
+  border-color: var(--alis-primary);
+  color: var(--alis-primary);
+}
+
+.userProfile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--alis-border);
+  background: var(--alis-bg);
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--alis-primary), #7c3aed);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.userInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.userName {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.userRole {
+  font-size: 10px;
+  color: var(--alis-text-muted);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.deptBadge {
+  font-size: 10px;
+  color: var(--alis-primary);
+  background: var(--alis-primary-bg);
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.pageContent {
+  flex: 1;
+  padding: 24px 28px;
+}
+
+.mobileTrigger {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .sidebar { transform: translateX(-100%); }
+  .mainContent { margin-left: 0; }
+  .mobileTrigger { display: block; cursor: pointer; }
+}

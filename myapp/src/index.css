@@ -1,0 +1,577 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  --alis-primary: #6366f1;
+  --alis-primary-hover: #4f46e5;
+  --alis-primary-glow: rgba(99, 102, 241, 0.3);
+  --alis-primary-bg: rgba(99, 102, 241, 0.08);
+  --alis-secondary: #e2e8f0;
+  --alis-accent: #06d6a0;
+  --alis-accent-bg: rgba(6, 214, 160, 0.1);
+  --alis-bg: #f0f2f5;
+  --alis-bg-panel: #ffffff;
+  --alis-bg-card: #ffffff;
+  --alis-text: #0f172a;
+  --alis-text-muted: #64748b;
+  --alis-text-light: #94a3b8;
+  --alis-border: #e2e8f0;
+  --alis-border-subtle: #f1f5f9;
+
+  --alis-success: #10b981;
+  --alis-success-bg: rgba(16, 185, 129, 0.1);
+  --alis-warning: #f59e0b;
+  --alis-warning-bg: rgba(245, 158, 11, 0.1);
+  --alis-danger: #ef4444;
+  --alis-danger-bg: rgba(239, 68, 68, 0.1);
+  --alis-info: #3b82f6;
+  --alis-info-bg: rgba(59, 130, 246, 0.1);
+
+  --shadow-xs: 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -1px rgba(0,0,0,0.04);
+  --shadow-lg: 0 10px 25px -3px rgba(0,0,0,0.08), 0 4px 6px -2px rgba(0,0,0,0.04);
+  --shadow-glow: 0 0 20px var(--alis-primary-glow);
+
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.25rem;
+
+  /* Legacy compat */
+  --erp-primary: var(--alis-primary);
+  --erp-primary-hover: var(--alis-primary-hover);
+  --erp-primary-bg: var(--alis-primary-bg);
+  --erp-secondary: var(--alis-secondary);
+  --erp-bg: var(--alis-bg);
+  --erp-bg-panel: var(--alis-bg-panel);
+  --erp-text: var(--alis-text);
+  --erp-text-muted: var(--alis-text-muted);
+  --erp-border: var(--alis-border);
+  --erp-success: var(--alis-success);
+  --erp-success-bg: var(--alis-success-bg);
+  --erp-warning: var(--alis-warning);
+  --erp-warning-bg: var(--alis-warning-bg);
+  --erp-danger: var(--alis-danger);
+  --erp-danger-bg: var(--alis-danger-bg);
+}
+
+.dark {
+  --alis-primary: #818cf8;
+  --alis-primary-hover: #a5b4fc;
+  --alis-primary-glow: rgba(129, 140, 248, 0.25);
+  --alis-primary-bg: rgba(129, 140, 248, 0.1);
+  --alis-secondary: #1e293b;
+  --alis-accent: #34d399;
+  --alis-accent-bg: rgba(52, 211, 153, 0.1);
+  --alis-bg: #0c0f1a;
+  --alis-bg-panel: #141827;
+  --alis-bg-card: #1a1f35;
+  --alis-text: #f1f5f9;
+  --alis-text-muted: #94a3b8;
+  --alis-text-light: #64748b;
+  --alis-border: #1e293b;
+  --alis-border-subtle: #1a1f35;
+
+  --alis-success: #34d399;
+  --alis-success-bg: rgba(16, 185, 129, 0.15);
+  --alis-warning: #fbbf24;
+  --alis-warning-bg: rgba(245, 158, 11, 0.15);
+  --alis-danger: #f87171;
+  --alis-danger-bg: rgba(239, 68, 68, 0.15);
+  --alis-info: #60a5fa;
+  --alis-info-bg: rgba(59, 130, 246, 0.15);
+
+  --erp-primary: var(--alis-primary);
+  --erp-primary-hover: var(--alis-primary-hover);
+  --erp-primary-bg: var(--alis-primary-bg);
+  --erp-secondary: var(--alis-secondary);
+  --erp-bg: var(--alis-bg);
+  --erp-bg-panel: var(--alis-bg-panel);
+  --erp-text: var(--alis-text);
+  --erp-text-muted: var(--alis-text-muted);
+  --erp-border: var(--alis-border);
+  --erp-success: var(--alis-success);
+  --erp-success-bg: var(--alis-success-bg);
+  --erp-warning: var(--alis-warning);
+  --erp-warning-bg: var(--alis-warning-bg);
+  --erp-danger: var(--alis-danger);
+  --erp-danger-bg: var(--alis-danger-bg);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: var(--alis-bg);
+  color: var(--alis-text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* ═══════════════════════════════════════════
+   ALIS CARD SYSTEM
+   ═══════════════════════════════════════════ */
+.erp-card, .alis-card {
+  background: var(--alis-bg-panel);
+  border: 1px solid var(--alis-border);
+  border-radius: var(--radius-xl);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.erp-card:hover, .alis-card:hover {
+  box-shadow: var(--shadow-md);
+  border-color: var(--alis-primary-bg);
+}
+
+.alis-card-glow {
+  background: var(--alis-bg-panel);
+  border: 1px solid transparent;
+  border-radius: var(--radius-xl);
+  padding: 24px;
+  box-shadow: var(--shadow-glow);
+  background-image: linear-gradient(var(--alis-bg-panel), var(--alis-bg-panel)), 
+                     linear-gradient(135deg, var(--alis-primary), var(--alis-accent));
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+}
+
+.alis-glass {
+  background: rgba(255,255,255,0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.2);
+}
+.dark .alis-glass {
+  background: rgba(20, 24, 39, 0.8);
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
+.alis-gradient-card {
+  background: linear-gradient(135deg, var(--alis-primary), #8b5cf6);
+  border: none;
+  color: white;
+  border-radius: var(--radius-xl);
+  padding: 24px;
+}
+
+/* ═══════════════════════════════════════════
+   BUTTONS
+   ═══════════════════════════════════════════ */
+.erp-btn, .alis-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: var(--radius-lg);
+  font-weight: 500;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  border: none;
+  font-family: inherit;
+  letter-spacing: 0.01em;
+}
+
+.erp-btn-primary, .alis-btn-primary {
+  background: linear-gradient(135deg, var(--alis-primary), #7c3aed);
+  color: white;
+  box-shadow: 0 2px 8px var(--alis-primary-glow);
+}
+
+.erp-btn-primary:hover, .alis-btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px var(--alis-primary-glow);
+}
+
+.erp-btn-outline, .alis-btn-outline {
+  background-color: transparent;
+  color: var(--alis-text);
+  border: 1px solid var(--alis-border);
+}
+
+.erp-btn-outline:hover, .alis-btn-outline:hover {
+  background-color: var(--alis-primary-bg);
+  border-color: var(--alis-primary);
+  color: var(--alis-primary);
+}
+
+.alis-btn-ghost {
+  background: transparent;
+  color: var(--alis-text-muted);
+  border: none;
+  padding: 6px 12px;
+}
+.alis-btn-ghost:hover {
+  background: var(--alis-primary-bg);
+  color: var(--alis-primary);
+}
+
+.alis-btn-danger {
+  background: var(--alis-danger);
+  color: white;
+  border: none;
+}
+
+/* ═══════════════════════════════════════════
+   TABLE SYSTEM
+   ═══════════════════════════════════════════ */
+.erp-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.erp-table th {
+  background-color: var(--alis-bg);
+  padding: 12px 16px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--alis-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border-bottom: 1px solid var(--alis-border);
+}
+
+.erp-table td {
+  padding: 14px 16px;
+  font-size: 13px;
+  border-bottom: 1px solid var(--alis-border-subtle);
+  color: var(--alis-text);
+}
+
+.erp-table tr:last-child td { border-bottom: none; }
+.erp-table tr:hover td { background-color: var(--alis-primary-bg); }
+
+/* ═══════════════════════════════════════════
+   BADGES
+   ═══════════════════════════════════════════ */
+.erp-badge, .alis-badge {
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-size: 11px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  letter-spacing: 0.02em;
+}
+
+.erp-badge-pending, .erp-badge-pending_staff, .erp-badge-pending_hod, .erp-badge-pending_principal {
+  background-color: var(--alis-warning-bg);
+  color: var(--alis-warning);
+}
+
+.erp-badge-approved {
+  background-color: var(--alis-success-bg);
+  color: var(--alis-success);
+}
+
+.erp-badge-rejected {
+  background-color: var(--alis-danger-bg);
+  color: var(--alis-danger);
+}
+
+.erp-badge-escalated {
+  background-color: var(--alis-info-bg);
+  color: var(--alis-info);
+}
+
+.alis-badge-role {
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.alis-badge-principal { background: linear-gradient(135deg, #6366f1, #8b5cf6); color: white; }
+.alis-badge-hod { background: linear-gradient(135deg, #3b82f6, #06b6d4); color: white; }
+.alis-badge-staff { background: linear-gradient(135deg, #10b981, #14b8a6); color: white; }
+.alis-badge-student { background: linear-gradient(135deg, #f59e0b, #f97316); color: white; }
+
+/* ═══════════════════════════════════════════
+   INPUTS
+   ═══════════════════════════════════════════ */
+.erp-input, .alis-input {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--alis-border);
+  font-family: inherit;
+  font-size: 13px;
+  outline: none;
+  transition: all 0.2s;
+  background: var(--alis-bg-panel);
+  color: var(--alis-text);
+}
+
+.erp-input:focus, .alis-input:focus {
+  border-color: var(--alis-primary);
+  box-shadow: 0 0 0 3px var(--alis-primary-glow);
+}
+
+.erp-input::placeholder { color: var(--alis-text-light); }
+
+/* ═══════════════════════════════════════════
+   DASHBOARD GRID
+   ═══════════════════════════════════════════ */
+.erp-dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 20px;
+}
+
+.erp-col-12 { grid-column: span 12; }
+.erp-col-8 { grid-column: span 8; }
+.erp-col-4 { grid-column: span 4; }
+.erp-col-6 { grid-column: span 6; }
+.erp-col-3 { grid-column: span 3; }
+
+@media (max-width: 1024px) {
+  .erp-col-8, .erp-col-4, .erp-col-6, .erp-col-3 {
+    grid-column: span 12;
+  }
+}
+
+/* ═══════════════════════════════════════════
+   INDICATORS & STATUS
+   ═══════════════════════════════════════════ */
+.erp-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+.erp-indicator-online { background-color: var(--alis-success); box-shadow: 0 0 6px var(--alis-success); }
+.erp-indicator-offline { background-color: var(--alis-danger); }
+
+.alis-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* Score Ring */
+.alis-score-ring {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 700;
+  position: relative;
+}
+.alis-score-high { background: var(--alis-success-bg); color: var(--alis-success); border: 3px solid var(--alis-success); }
+.alis-score-medium { background: var(--alis-warning-bg); color: var(--alis-warning); border: 3px solid var(--alis-warning); }
+.alis-score-low { background: var(--alis-danger-bg); color: var(--alis-danger); border: 3px solid var(--alis-danger); }
+
+/* ═══════════════════════════════════════════
+   PROGRESS BAR
+   ═══════════════════════════════════════════ */
+.erp-progress-container, .alis-progress {
+  width: 100%;
+  height: 6px;
+  background-color: var(--alis-secondary);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.erp-progress-bar, .alis-progress-bar {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  background: linear-gradient(90deg, var(--alis-primary), var(--alis-accent));
+}
+
+/* ═══════════════════════════════════════════
+   COMPACT / ZEN MODES
+   ═══════════════════════════════════════════ */
+.compact .erp-card { padding: 12px 16px; }
+.compact .erp-btn { padding: 6px 12px; font-size: 12px; }
+.compact .erp-table th, .compact .erp-table td { padding: 8px 12px; font-size: 12px; }
+.compact h1 { font-size: 20px !important; }
+.compact h3 { font-size: 14px !important; }
+.compact .erp-dashboard-grid { gap: 12px; }
+.compact .erp-input { padding: 8px 10px; font-size: 12px; }
+
+.zen-mode .alis-sidebar { width: 60px !important; }
+.zen-mode .alis-sidebar .nav-label,
+.zen-mode .alis-sidebar .brand-text,
+.zen-mode .alis-sidebar .sidebar-footer-text { display: none !important; }
+.zen-mode .alis-main { margin-left: 60px !important; }
+
+/* ═══════════════════════════════════════════
+   SWITCH
+   ═══════════════════════════════════════════ */
+.erp-switch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+}
+.erp-switch input { opacity: 0; width: 0; height: 0; }
+.erp-slider {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  background-color: var(--alis-secondary);
+  transition: .3s;
+  border-radius: 24px;
+}
+.erp-slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: .3s;
+  border-radius: 50%;
+}
+input:checked + .erp-slider { background: linear-gradient(135deg, var(--alis-primary), #7c3aed); }
+input:checked + .erp-slider:before { transform: translateX(20px); }
+
+/* ═══════════════════════════════════════════
+   ANIMATIONS
+   ═══════════════════════════════════════════ */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-16px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes glow {
+  0%, 100% { box-shadow: 0 0 8px var(--alis-primary-glow); }
+  50% { box-shadow: 0 0 20px var(--alis-primary-glow); }
+}
+
+.erp-dashboard-grid > div {
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+.alis-animate-in {
+  animation: scaleIn 0.3s ease-out forwards;
+}
+
+/* ═══════════════════════════════════════════
+   GAMIFICATION BADGES
+   ═══════════════════════════════════════════ */
+.alis-badge-earned {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 12px;
+  border-radius: var(--radius-lg);
+  background: var(--alis-bg);
+  border: 1px solid var(--alis-border);
+  text-align: center;
+  transition: all 0.2s;
+  min-width: 90px;
+}
+.alis-badge-earned:hover {
+  border-color: var(--alis-accent);
+  box-shadow: 0 0 12px var(--alis-accent-bg);
+  transform: translateY(-2px);
+}
+.alis-badge-earned .badge-icon {
+  font-size: 28px;
+  line-height: 1;
+}
+.alis-badge-earned .badge-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--alis-text-muted);
+}
+
+/* ═══════════════════════════════════════════
+   MODAL OVERLAY
+   ═══════════════════════════════════════════ */
+.alis-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(4px);
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.2s ease-out;
+}
+.alis-modal {
+  background: var(--alis-bg-panel);
+  border-radius: var(--radius-2xl);
+  padding: 32px;
+  width: 100%;
+  max-width: 480px;
+  box-shadow: var(--shadow-lg);
+  animation: scaleIn 0.3s ease-out;
+}
+
+/* ═══════════════════════════════════════════
+   KPI STAT CARDS
+   ═══════════════════════════════════════════ */
+.alis-stat-card {
+  padding: 20px;
+  border-radius: var(--radius-xl);
+  background: var(--alis-bg-panel);
+  border: 1px solid var(--alis-border);
+  transition: all 0.2s;
+}
+.alis-stat-card:hover {
+  border-color: var(--alis-primary);
+  box-shadow: var(--shadow-md);
+}
+.alis-stat-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+.alis-stat-value {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-top: 8px;
+}
+.alis-stat-label {
+  font-size: 12px;
+  color: var(--alis-text-muted);
+  margin-top: 2px;
+}
+
+/* ═══════════════════════════════════════════
+   SCROLLBAR
+   ═══════════════════════════════════════════ */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--alis-border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--alis-text-muted); }
